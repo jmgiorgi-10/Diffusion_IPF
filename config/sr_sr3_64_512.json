@@ -1,6 +1,6 @@
 {
-    "name": "distributed_high_sr_ffhq",
-    "phase": "train", // train or val
+    "name": "distributed_high_sr_ti7_ipf",
+    "phase": "val", // train or val
     "gpu_ids": [
         0,1
     ],
@@ -9,8 +9,8 @@
         "tb_logger": "tb_logger",
         "results": "results",
         "checkpoint": "checkpoint",
-        "resume_state": null
-        // "resume_state": "experiments/distributed_high_sr_ffhq_210901_121212/checkpoint/I830000_E32" //pretrain model or training state
+        // "resume_state": null
+        "resume_state": "experiments/I830000_E32"
     },
     "datasets": {
         "train": {
@@ -26,13 +26,13 @@
             "data_len": -1 // -1 represents all data used in train
         },
         "val": {
-            "name": "CelebaHQ",
+            "name": "IPF",
             "mode": "LRHR",
-            "dataroot": "dataset/celebahq_64_512",
+            "dataroot": "dataset/ipf-ti64-ready_64_512",
             "datatype": "img", //lmdb or img, path of img files
             "l_resolution": 64,
             "r_resolution": 512,
-            "data_len": 50
+            "data_len": -1
         }
     },
     "model": {

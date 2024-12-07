@@ -7,7 +7,7 @@ import data.util as Util
 
 
 class LRHRDataset(Dataset):
-    def __init__(self, dataroot, datatype, l_resolution=16, r_resolution=128, split='train', data_len=-1, need_LR=False):
+    def __init__(self, dataroot, datatype, l_resolution=64, r_resolution=512, split='train', data_len=-1, need_LR=False):
         self.datatype = datatype
         self.l_res = l_resolution
         self.r_res = r_resolution
@@ -25,6 +25,8 @@ class LRHRDataset(Dataset):
                 self.data_len = self.dataset_len
             else:
                 self.data_len = min(self.data_len, self.dataset_len)
+
+        # image: #        
         elif datatype == 'img':
             self.sr_path = Util.get_paths_from_images(
                 '{}/sr_{}_{}'.format(dataroot, l_resolution, r_resolution))

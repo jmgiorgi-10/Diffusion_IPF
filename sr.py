@@ -6,7 +6,7 @@ import logging
 import core.logger as Logger
 import core.metrics as Metrics
 from core.wandb_logger import WandbLogger
-from tensorboardX import SummaryWriter
+# from tensorboardX import SummaryWriter
 import os
 import numpy as np
 
@@ -37,7 +37,7 @@ if __name__ == "__main__":
     Logger.setup_logger('val', opt['path']['log'], 'val', level=logging.INFO)
     logger = logging.getLogger('base')
     logger.info(Logger.dict2str(opt))
-    tb_logger = SummaryWriter(log_dir=opt['path']['tb_logger'])
+    # tb_logger = SummaryWriter(log_dir=opt['path']['tb_logger'])
 
     # Initialize WandbLogger
     if opt['enable_wandb']:
@@ -57,9 +57,11 @@ if __name__ == "__main__":
             train_loader = Data.create_dataloader(
                 train_set, dataset_opt, phase)
         elif phase == 'val':
+            print("phase detected as validation check")
             val_set = Data.create_dataset(dataset_opt, phase)
             val_loader = Data.create_dataloader(
                 val_set, dataset_opt, phase)
+            print("length of val loader: ", len(val_loader))
     logger.info('Initial Dataset Finished')
 
     # model
@@ -179,7 +181,16 @@ if __name__ == "__main__":
         idx = 0
         result_path = '{}'.format(opt['path']['results'])
         os.makedirs(result_path, exist_ok=True)
+
+        print("123")
+        # import pdb; pdb.set_trace()
+
+
+        ## START DEBUGGING HERE, BELOW:: ##
         for _,  val_data in enumerate(val_loader):
+
+            print("in evaluation for loop")
+
             idx += 1
             diffusion.feed_data(val_data)
             diffusion.test(continous=True)
